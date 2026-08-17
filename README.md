@@ -6,10 +6,10 @@
 
 | 产品 | Windows | Mac (Apple 芯片) |
 |------|---------|------------------|
-| 学生端 | [v0.1.15 安装包](https://download.qonnwolf.com/desktop/win/v0.1.15/Qonnwolf-Student-Setup-0.1.15.exe) | [v0.1.15 安装包](https://download.qonnwolf.com/desktop/mac/v0.1.15/Qonnwolf-Student-Setup-0.1.15.dmg) |
-| 员工版 | [v0.0.9 安装包](https://download.qonnwolf.com/teacher/win/v0.0.9/Qonnwolf-Teacher-Setup-0.0.9.exe) | [v0.0.9 安装包](https://download.qonnwolf.com/teacher/mac/v0.0.9/Qonnwolf-Teacher-Setup-0.0.9.dmg) |
+| 学生端 | [下载安装包](https://download.qonnwolf.com/desktop/win/latest/Qonnwolf-Student-Setup.exe) | [下载安装包](https://download.qonnwolf.com/desktop/mac/latest/Qonnwolf-Student-Setup.dmg) |
+| 员工版 | [下载安装包](https://download.qonnwolf.com/teacher/win/latest/Qonnwolf-Teacher-Setup.exe) | [下载安装包](https://download.qonnwolf.com/teacher/mac/latest/Qonnwolf-Teacher-Setup.dmg) |
 
-> 链接可能落后于最新发版——没关系,装上后客户端启动时会自动提示更新到最新版。
+> 链接始终指向最新版本。
 
 ## 怎么用
 
