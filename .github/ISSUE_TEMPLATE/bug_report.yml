@@ -51,8 +51,11 @@ body:
   - type: textarea
     id: evidence
     attributes:
-      label: 截图 / 日志
-      description: 截图直接拖进来
+      label: 截图 / 日志文件
+      description: |
+        截图和日志文件都直接拖进这个输入框(支持 .log/.txt/.zip)。
+        取日志:客户端「设置 → 日志目录 → 打开日志」会弹出日志文件夹,把 student.log 拖进来。
+        软件打不开时手动找:Windows 在 C:\Users\<用户名>\AppData\Roaming\<穹狼AI 或 Qonnwolf Teacher>\logs\;Mac 在 ~/Library/Logs/<同名目录>/。
     validations:
       required: false
   - type: input
