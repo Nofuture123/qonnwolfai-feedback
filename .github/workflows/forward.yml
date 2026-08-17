@@ -1,0 +1,49 @@
+name: Forward Issue
+
+# 员工在本仓提 issue → 按「哪个产品」自动复制到对应开发仓 → 回评链接。
+# 员工只接触本仓,开发仓(代码)完全隔离。
+# 跨仓建 issue 用 AI_FIX_GH_PAT(内置 GITHUB_TOKEN 出不了本仓)。
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    env:
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+      ISSUE_TITLE: ${{ github.event.issue.title }}
+      ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+      ISSUE_URL: ${{ github.event.issue.html_url }}
+    steps:
+      - name: Forward to code repo
+        env:
+          GH_TOKEN: ${{ secrets.AI_FIX_GH_PAT }}
+        run: |
+          gh api "repos/${{ github.repository }}/issues/${ISSUE_NUMBER}" --jq .body > /tmp/original-body.md
+
+          product=$(awk '/^### 哪个产品/{found=1; next} found && NF {print; exit}' /tmp/original-body.md)
+          case "$product" in
+            *员工*|*教师*) target="Nofuture123/qonnwolfai-teacher" ;;
+            *) target="Nofuture123/qonnwolfai-student" ;;
+          esac
+          echo "target=$target"
+
+          {
+            echo "> 来自员工反馈 ${ISSUE_URL} (提报人 @${ISSUE_AUTHOR})"
+            echo ""
+            cat /tmp/original-body.md
+          } > /tmp/forward-body.md
+
+          new_url=$(gh issue create -R "$target" --title "$ISSUE_TITLE" --body-file /tmp/forward-body.md)
+          echo "NEW_URL=$new_url" >> "$GITHUB_ENV"
+
+      - name: Comment back
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          printf '已转入开发仓跟进:%s\n\n感谢反馈!修复进展请看上面链接(修好后那边的 issue 会自动关闭)。\n' "$NEW_URL" > /tmp/comment.md
+          gh issue comment "$ISSUE_NUMBER" -R "${{ github.repository }}" --body-file /tmp/comment.md
